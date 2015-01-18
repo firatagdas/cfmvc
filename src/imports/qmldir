@@ -1,0 +1,4 @@
+module CFMvc
+plugin declarative_cfmvc
+typeinfo plugins.qmltypes
+classname CFMvcModule
