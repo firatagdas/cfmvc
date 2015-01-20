@@ -22,7 +22,6 @@ public:
     CFApiModel::RequestMethod requestMethod;
     QString path;
     QVariantMap defaultParams;
-    QStringList requiredParams;
 };
 
 class CFApiModelPrivate : public QObject

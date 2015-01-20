@@ -71,16 +71,16 @@ class CFApiModel : public CFModel
     };
 
 public:
-    explicit CFApiModel(CFMvc *mvc, const QVariant &config = QVariant());
+    explicit CFApiModel(CFMvc *mvc, const QVariantMap &config = QVariantMap());
     ~CFApiModel();
 
     bool addRoute(const QString &name,
                   RequestMethod requestMethod = RequestMethodGet,
-                  const QString &url = QString(),
-                  const QVariantMap &defaultParams = QVariantMap(),
-                  const QStringList &requiredParams = QStringList());
+                  const QString &path = QString(),
+                  const QVariantMap &defaultParams = QVariantMap());
     bool removeRoute(const QString &name);
     bool hasRoute(const QString &name) const;
+    void clearRoute();
 
     quint64 route(const QString &name, const QVariantMap &params = QVariantMap());
 
@@ -89,6 +89,8 @@ public:
 
     void setUrl(const QString &url);
     QString url() const;
+
+    void apply();
 
 protected:
     QString buildUrl(const QString &url, const QVariantMap &params);
@@ -109,5 +111,6 @@ private:
 };
 
 QML_DECLARE_TYPE(CFApiModel)
+QML_DECLARE_TYPE(CFApiModel::RequestMethod)
 
 #endif // CFAPIMODEL_H

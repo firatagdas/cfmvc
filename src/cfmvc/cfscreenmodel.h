@@ -14,7 +14,7 @@ class CFScreenModel : public CFModel
     CFMVC_MODEL_OBJECT(CFScreenModel)
 
 public:
-    explicit CFScreenModel(CFMvc *mvc, const QVariant &config = QVariant());
+    explicit CFScreenModel(CFMvc *mvc, const QVariantMap &config = QVariantMap());
     ~CFScreenModel();
 
     qreal dp(qreal px);

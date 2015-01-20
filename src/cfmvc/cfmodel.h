@@ -44,7 +44,7 @@ class Q_CFMVC_EXPORT CFModel : public QObject
     Q_OBJECT
 public:
     CFModel() : QObject(0) {} // QML for meta registration
-    explicit CFModel(CFMvc *mvc, const QVariant &config = QVariant()) // real registration
+    explicit CFModel(CFMvc *mvc, const QVariantMap &config = QVariantMap()) // real registration
         : QObject(0)
         , m_mvc(mvc)
     {
@@ -53,7 +53,7 @@ public:
 
     ~CFModel() {}
 
-    void setConfig(const QVariant &config) { m_config = config; apply(); }
+    void setConfig(const QVariantMap &config) { m_config = config; apply(); }
     QVariant config() { return m_config; }
     virtual void apply() {}
 
@@ -69,9 +69,9 @@ Q_SIGNALS:
 
 public Q_SLOTS:
 
-private:
+protected:
     CFMvc *m_mvc;
-    QVariant m_config;
+    QVariantMap m_config;
 };
 
 template <typename T>

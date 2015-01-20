@@ -7,7 +7,7 @@
 
 CFMVC_MODEL_BEGIN(CFScreenModel)
 
-CFScreenModel::CFScreenModel(CFMvc *mvc, const QVariant &config)
+CFScreenModel::CFScreenModel(CFMvc *mvc, const QVariantMap &config)
     : CFModel(mvc, config)
     , m_dpi(0.)
     , m_scaleFactor(1.)

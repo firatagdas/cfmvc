@@ -24,11 +24,13 @@ HEADERS += $$PUBLIC_HEADERS $$PRIVATE_HEADERS \
     $$PWD/cfmodel.h \
     $$PWD/cfapimodel.h \
     $$PWD/cfapimodel_p.h \
-    $$PWD/cfscreenmodel.h
+    $$PWD/cfscreenmodel.h \
+    $$PWD/cfassetmodel.h
 
 SOURCES += \
     $$PWD/cfmvc.cpp \
     $$PWD/cfmodel.cpp \
     $$PWD/cfapimodel.cpp \
     $$PWD/cfapimodel_p.cpp \
-    $$PWD/cfscreenmodel.cpp
+    $$PWD/cfscreenmodel.cpp \
+    $$PWD/cfassetmodel.cpp
