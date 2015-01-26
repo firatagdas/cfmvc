@@ -1,31 +1,18 @@
-ANDROID_BUNDLED_JAR_DEPENDENCIES = \
-    jar/CFAndroidMvc-bundled.jar
-ANDROID_JAR_DEPENDENCIES = \
-    jar/CFAndroidMvc.jar
+# ANDROID_BUNDLED_JAR_DEPENDENCIES = jar/CFAndroidMvc-bundled.jar
+# ANDROID_JAR_DEPENDENCIES = jar/CFAndroidMvc.jar
 
 INCLUDEPATH += $$PWD
 
 PUBLIC_HEADERS += \
-    cfmvc_global.h
-
-android {
-    QT += androidextras
-
-
-} else:ios {
-
-
-} else {
-
-}
-
-HEADERS += $$PUBLIC_HEADERS $$PRIVATE_HEADERS \
+    $$PWD/cfmvc_global.h \
     $$PWD/cfmvc.h \
     $$PWD/cfmodel.h \
     $$PWD/cfapimodel.h \
-    $$PWD/cfapimodel_p.h \
     $$PWD/cfscreenmodel.h \
     $$PWD/cfassetmodel.h
+
+PRIVATE_HEADERS += \
+    $$PWD/cfapimodel_p.h
 
 SOURCES += \
     $$PWD/cfmvc.cpp \
@@ -34,3 +21,19 @@ SOURCES += \
     $$PWD/cfapimodel_p.cpp \
     $$PWD/cfscreenmodel.cpp \
     $$PWD/cfassetmodel.cpp
+
+android {
+    QT += androidextras
+
+    HEADERS += \
+        $$PWD/cfandroidutil.h
+
+} else:ios {
+
+
+} else {
+
+}
+
+HEADERS += $$PUBLIC_HEADERS $$PRIVATE_HEADERS
+

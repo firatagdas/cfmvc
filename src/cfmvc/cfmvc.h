@@ -21,29 +21,26 @@
 Q_DECLARE_LOGGING_CATEGORY(LCFMvc)
 
 class CFModel;
-typedef const char * CFModelId;
 
 class Q_CFMVC_EXPORT CFMvc : public QObject
 {
     Q_OBJECT
+
 public:
     CFMvc();
     ~CFMvc();
 
     static CFMvc *instance();
 
-    bool isRegistered(CFModelId name);
-    bool registerModel(CFModel *model);
-    bool unregisterModel(CFModelId name);
-    CFModel *model(CFModelId name);
-
-Q_SIGNALS:
-
-public Q_SLOTS:
+    bool isRegistered(const char *name);
+    Q_INVOKABLE bool isRegistered(const QString &name);
+    Q_INVOKABLE bool registerModel(CFModel *model);
+    Q_INVOKABLE bool unregisterModel(const QString &name);
+    CFModel *model(const QString &name);
 
 private:
     static CFMvc *m_instance;
-    QMap<CFModelId, CFModel *> m_modelMap;
+    QMap<QString, CFModel *> m_modelMap;
 };
 
 #endif // CFMVC_H

@@ -4,7 +4,7 @@
 #include <QObject>
 #include "cfmodel.h"
 
-class CFScreenModel : public CFModel
+class Q_CFMVC_EXPORT CFScreenModel : public CFModel
 {
     Q_OBJECT
     Q_PROPERTY(qreal dpi READ dpi CONSTANT)
@@ -17,8 +17,8 @@ public:
     explicit CFScreenModel(CFMvc *mvc, const QVariantMap &config = QVariantMap());
     ~CFScreenModel();
 
-    qreal dp(qreal px);
-    qreal sp(qreal px);
+    Q_INVOKABLE qreal dp(qreal px);
+    Q_INVOKABLE qreal sp(qreal px);
 
     void setTextScaleFactor(qreal textScaleFactor);
     qreal textScaleFactor();

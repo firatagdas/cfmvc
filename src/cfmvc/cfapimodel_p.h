@@ -51,6 +51,7 @@ private:
     QString m_url;
     quint64 m_requestId;
     bool m_inited;
+    QVariantMap m_defaultParams;
 };
 
 #endif // CFAPIMODEL_P_H

@@ -49,21 +49,20 @@ void CFScreenModel::onRegistered()
             dpi = displayMetrics.getField<int>("densityDpi");
         }
     }
+#elif defined(Q_OS_IOS)
+    dpi = screen->physicalDotsPerInch();
 #else
     dpi = screen->physicalDotsPerInch() * screen->devicePixelRatio();
 #endif
 
-    qCDebug(LCFMvc) << "DPI" << dpi
+    m_dpi = dpi;
+    m_scaleFactor = (int) (m_dpi / 160);
+
+    qCDebug(LCFMvc) << "DPI" << m_dpi
+                    << "Scale" << m_scaleFactor
                     << "PhysicalDotsPerInch" << screen->physicalDotsPerInch()
                     << "LogicalDotsPerInch" << screen->logicalDotsPerInch()
                     << "Device Pixel Ratio" << screen->devicePixelRatio();
-
-    m_dpi = dpi;
-#ifdef Q_OS_IOS
-    m_scaleFactor = (int) (m_dpi / 160);
-#else
-    m_scaleFactor = m_dpi / 160.;
-#endif
 }
 
 qreal CFScreenModel::dpi()

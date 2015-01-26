@@ -81,9 +81,12 @@ quint64 CFApiModel::route(const QString &name, const QVariantMap &params)
     }
 
     CFApiRoute *route = d->m_routes.value(name);
-    QVariantMap mergedParams = route->defaultParams;
+    QVariantMap mergedParams = d->m_defaultParams;
 
     QVariantMap::const_iterator it;
+    for (it = route->defaultParams.constBegin(); it != route->defaultParams.constEnd(); ++it)
+        mergedParams.insert(it.key(), it.value());
+
     for (it = params.constBegin(); it != params.constEnd(); ++it)
         mergedParams.insert(it.key(), it.value());
 
@@ -135,6 +138,18 @@ QString CFApiModel::url() const
 {
     Q_D(const CFApiModel);
     return d->m_url;
+}
+
+void CFApiModel::setDefaultParams(const QVariantMap &defaultParams)
+{
+    Q_D(CFApiModel);
+    d->m_defaultParams = defaultParams;
+}
+
+QVariantMap CFApiModel::defaultParams() const
+{
+    Q_D(const CFApiModel);
+    return d->m_defaultParams;
 }
 
 void CFApiModel::apply()

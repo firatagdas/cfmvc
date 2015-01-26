@@ -44,9 +44,14 @@ int CFApiModelPrivate::request(const QString &url, CFApiModel::RequestMethod req
     m_requestId++;
 
     bool canPostable = requestMethod == CFApiModel::RequestMethodPost || requestMethod == CFApiModel::RequestMethodPut;
-    if (!canPostable)
+    if (!canPostable) {
         query.setQuery(newUrl.query());
-    else {
+        if (query.hasQueryItem(QLatin1String(CFRequestIdQueryItem)))
+            query.removeQueryItem(QLatin1String(CFRequestIdQueryItem));
+
+        query.addQueryItem(QLatin1String(CFRequestIdQueryItem), QString::number(m_requestId));
+
+    } else {
         request.setHeader(QNetworkRequest::ContentTypeHeader, QStringLiteral("application/x-www-form-urlencoded; charset=UTF-8"));
 
         QUrlQuery existingQuery(newUrl.query());
@@ -87,7 +92,7 @@ int CFApiModelPrivate::request(const QString &url, CFApiModel::RequestMethod req
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(onError(QNetworkReply::NetworkError)));
     connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(onDownloadProgress(qint64,qint64)));
 
-    return 0;
+    return m_requestId;
 }
 
 quint64 CFApiModelPrivate::parseRequestId(const QUrl &url)
@@ -97,7 +102,7 @@ quint64 CFApiModelPrivate::parseRequestId(const QUrl &url)
 
     if (query.hasQueryItem(QLatin1String(CFRequestIdQueryItem))) {
         bool ok = false;
-        requestId = query.queryItemValue(CFRequestIdQueryItem).toInt(&ok);
+        requestId = query.queryItemValue(QLatin1String(CFRequestIdQueryItem)).toInt(&ok);
         if (!ok)
             requestId = 0;
     }

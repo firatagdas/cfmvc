@@ -4,10 +4,11 @@
 #include <QObject>
 #include <QNetworkReply>
 #include "cfmodel.h"
+#include "cfmvc_global.h"
 
 class CFApiModelPrivate;
 
-class CFApiModel : public CFModel
+class Q_CFMVC_EXPORT CFApiModel : public CFModel
 {
     Q_OBJECT
     Q_ENUMS(ApiError)
@@ -74,21 +75,21 @@ public:
     explicit CFApiModel(CFMvc *mvc, const QVariantMap &config = QVariantMap());
     ~CFApiModel();
 
-    bool addRoute(const QString &name,
+    Q_INVOKABLE bool addRoute(const QString &name,
                   RequestMethod requestMethod = RequestMethodGet,
                   const QString &path = QString(),
                   const QVariantMap &defaultParams = QVariantMap());
-    bool removeRoute(const QString &name);
-    bool hasRoute(const QString &name) const;
-    void clearRoute();
+    Q_INVOKABLE bool removeRoute(const QString &name);
+    Q_INVOKABLE bool hasRoute(const QString &name) const;
+    Q_INVOKABLE void clearRoute();
 
-    quint64 route(const QString &name, const QVariantMap &params = QVariantMap());
+    Q_INVOKABLE quint64 route(const QString &name, const QVariantMap &params = QVariantMap());
 
-    void setDefaultParams(const QVariant &defaultParams);
-    QVariant defaultParams() const;
+    Q_INVOKABLE void setDefaultParams(const QVariantMap &defaultParams);
+    Q_INVOKABLE QVariantMap defaultParams() const;
 
-    void setUrl(const QString &url);
-    QString url() const;
+    Q_INVOKABLE void setUrl(const QString &url);
+    Q_INVOKABLE QString url() const;
 
     void apply();
 
@@ -112,5 +113,6 @@ private:
 
 QML_DECLARE_TYPE(CFApiModel)
 QML_DECLARE_TYPE(CFApiModel::RequestMethod)
+QML_DECLARE_TYPE(CFApiModel::ApiError)
 
 #endif // CFAPIMODEL_H

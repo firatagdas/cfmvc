@@ -22,32 +22,38 @@ CFMvc *CFMvc::instance()
     return m_instance;
 }
 
-bool CFMvc::isRegistered(CFModelId name)
+bool CFMvc::isRegistered(const char *name)
 {
-    return m_modelMap.contains(name);
+    return isRegistered(QLatin1String(name));
+}
+
+bool CFMvc::isRegistered(const QString &name)
+{
+    return m_modelMap.value(name);
 }
 
 bool CFMvc::registerModel(CFModel *model)
 {
-    CFModelId modelId = model->name();
+    QString modelId = model->name();
     if (isRegistered(modelId)) {
         qCDebug(LCFMvc) << modelId << "is already registered.";
         return false;
+    } else {
+        qCDebug(LCFMvc) << modelId << "is registering" << model;
     }
 
-    m_modelMap[modelId] = model;
+    m_modelMap.insert(modelId, model);
     emit model->registered();
 
     return true;
 }
 
-bool CFMvc::unregisterModel(CFModelId name)
+bool CFMvc::unregisterModel(const QString &name)
 {
     if (!isRegistered(name))
         return false;
 
-    CFModel *model = 0;
-    model = m_modelMap.value(name);
+    CFModel *model = m_modelMap.value(name);
     emit model->unregistered();
 
     QObject *modelParent = model->parent();
@@ -59,7 +65,7 @@ bool CFMvc::unregisterModel(CFModelId name)
     return true;
 }
 
-CFModel *CFMvc::model(CFModelId name)
+CFModel *CFMvc::model(const QString &name)
 {
     CFModel *model = 0;
     if (isRegistered(name))

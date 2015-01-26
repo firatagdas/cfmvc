@@ -5,7 +5,7 @@
 
 #include "cfmodel.h"
 
-class CFAssetModel : public CFModel
+class Q_CFMVC_EXPORT CFAssetModel : public CFModel
 {
     Q_OBJECT
     Q_PROPERTY(QString imagePath READ imagePath WRITE setImagePath NOTIFY imagePathChanged)
