@@ -30,6 +30,8 @@ android {
 
 } else:ios {
 
+    HEADERS += \
+        $$PWD/cfiosutil.h
 
 } else {
 

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QMap>
 #include <QLoggingCategory>
+#include <qqml.h>
 #include "cfmvc_global.h"
 
 #ifndef CFMODEL_PACKAGE
@@ -25,7 +26,6 @@ class CFModel;
 class Q_CFMVC_EXPORT CFMvc : public QObject
 {
     Q_OBJECT
-
 public:
     CFMvc();
     ~CFMvc();
@@ -42,5 +42,26 @@ private:
     static CFMvc *m_instance;
     QMap<QString, CFModel *> m_modelMap;
 };
+
+class Q_CFMVC_EXPORT CFGlobal : public QObject
+{
+    Q_OBJECT
+    Q_ENUMS(PageAnimationType)
+
+public:
+    enum PageAnimationType {
+        PageAnimationHorizontalSlide,
+        PageAnimationVerticalSlide,
+        PageAnimationHorizontalPopover,
+        PageAnimationVerticalPopover,
+        PageAnimationVerticalExpose,
+        PageAnimationHorizontalExpose
+    };
+
+    CFGlobal(QObject *parent = 0) : QObject(parent) {}
+};
+
+QML_DECLARE_TYPE(CFGlobal)
+Q_DECLARE_METATYPE(CFGlobal::PageAnimationType)
 
 #endif // CFMVC_H

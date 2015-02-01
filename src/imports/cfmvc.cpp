@@ -1,5 +1,6 @@
 #include <QtQml/qqmlextensionplugin.h>
 #include <QtQml/qqml.h>
+#include <CFMvc/cfmvc.h>
 #include <CFMvc/cfmodel.h>
 #include <CFMvc/cfapimodel.h>
 #include <CFMvc/cfassetmodel.h>
@@ -8,6 +9,12 @@
 CFMVC_DEFINE_MODEL(CFApiModel)
 CFMVC_DEFINE_MODEL(CFAssetModel)
 CFMVC_DEFINE_MODEL(CFScreenModel)
+
+static inline QObject *getCFGlobal(QQmlEngine *, QJSEngine *)
+{
+    qDebug() << "Retrieving CFGlobal";
+    return new CFGlobal();
+}
 
 QT_BEGIN_NAMESPACE
 
@@ -21,6 +28,7 @@ public:
         Q_ASSERT(QLatin1String(uri) == QLatin1String("CFMvc"));
 
         // @uri CFMvc
+        qmlRegisterSingletonType<CFGlobal>(uri, 1, 0, "CFGlobal", getCFGlobal);
         qmlRegisterSingletonType<CFApiModel>(uri, 1, 0, "CFApiModel", CFMVC_MODEL(CFApiModel));
         qmlRegisterSingletonType<CFAssetModel>(uri, 1, 0, "CFAssetModel", CFMVC_MODEL(CFAssetModel));
         qmlRegisterSingletonType<CFScreenModel>(uri, 1, 0, "CFScreenModel", CFMVC_MODEL(CFScreenModel));

@@ -94,7 +94,7 @@ protected:
 };
 
 template <typename T>
-CFModel *CFMvcPreDefinedModelRegister(const QVariantMap &config = QVariantMap(), bool autoDestroy = false)
+CFModel *CFMvcPreDefinedModelRegister(const QVariantMap &config = QVariantMap(), bool autoDestroy = true)
 {
     CFMvc *mvc = CFMvc::instance();
     T *model = new T(mvc, config);
@@ -106,7 +106,7 @@ CFModel *CFMvcPreDefinedModelRegister(const QVariantMap &config = QVariantMap(),
 }
 
 template <typename T>
-CFModel *CFMvcModelRegister(QObject *(*callback)(QQmlEngine *, QJSEngine *), const QVariantMap &config = QVariantMap(), bool autoDestroy = false, const char *package = CFMODEL_PACKAGE, int major = CFMODEL_PACKAGE_MAJOR, int minor = CFMODEL_PACKAGE_MINOR)
+CFModel *CFMvcModelRegister(QObject *(*callback)(QQmlEngine *, QJSEngine *), const QVariantMap &config = QVariantMap(), bool autoDestroy = true, const char *package = CFMODEL_PACKAGE, int major = CFMODEL_PACKAGE_MAJOR, int minor = CFMODEL_PACKAGE_MINOR)
 {
     CFModel *model = CFMvcPreDefinedModelRegister<T>(config, autoDestroy);
     qmlRegisterSingletonType<T>(package, major, minor, model->name().toUtf8(), callback);
