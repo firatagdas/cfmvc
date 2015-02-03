@@ -1,4 +1,7 @@
 #include "cfassetmodel.h"
+#include <QRegExp>
+#include <QFile>
+#include "cfscreenmodel.h"
 
 static inline bool checkPath(QString &path)
 {
@@ -99,7 +102,25 @@ QString CFAssetModel::translationPath()
 
 QString CFAssetModel::image(const QString &fileName, bool withProtocol)
 {
-    return buildPath(m_imagePath, fileName, withProtocol);
+    QString imagePath = buildPath(m_imagePath, fileName, withProtocol);
+    QRegExp regex(QLatin1String("\\.(png|jpg|gif)$"));
+    if (regex.indexIn(imagePath) != -1) {
+        CFScreenModel *screenModel = qobject_cast<CFScreenModel *>(CFMvc::instance()->model(CFScreenModel::NAME));
+        int scaleFactor = screenModel->scaleFactor();
+        if (scaleFactor > 1) {
+            int i = scaleFactor;
+            QString delegate;
+            for (; i >= 2; i++) {
+                delegate = imagePath.replace(regex, QString::fromLatin1("@%1.%2").arg(scaleFactor).arg(regex.cap(1)));
+                if (QFile(delegate).exists()) {
+                    imagePath = delegate;
+                    break;
+                }
+            }
+        }
+    }
+
+    return imagePath;
 }
 
 QString CFAssetModel::qml(const QString &fileName, bool withProtocol)

@@ -127,8 +127,6 @@ void CFApiModel::setUrl(const QString &url)
     Q_D(CFApiModel);
     if (d->m_url != url) {
         d->m_url = url;
-        if (!d->m_url.endsWith(QLatin1Char('/')))
-            d->m_url += QLatin1Char('/');
 
         emit urlChanged();
     }
