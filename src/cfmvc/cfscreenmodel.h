@@ -8,7 +8,9 @@ class Q_CFMVC_EXPORT CFScreenModel : public CFModel
 {
     Q_OBJECT
     Q_PROPERTY(qreal dpi READ dpi CONSTANT)
+    Q_PROPERTY(qreal actualDpi READ actualDpi CONSTANT)
     Q_PROPERTY(qreal scaleFactor READ scaleFactor CONSTANT)
+    Q_PROPERTY(qreal actualScaleFactor READ actualScaleFactor CONSTANT)
     Q_PROPERTY(qreal textScaleFactor READ textScaleFactor WRITE setTextScaleFactor NOTIFY textScaleFactorChanged)
 
     CFMVC_MODEL_OBJECT(CFScreenModel)
@@ -26,6 +28,9 @@ public:
     qreal dpi();
     qreal scaleFactor();
 
+    qreal actualDpi();
+    qreal actualScaleFactor();
+
 Q_SIGNALS:
     void textScaleFactorChanged();
 
@@ -34,7 +39,9 @@ public Q_SLOTS:
 
 private:
     qreal m_dpi;
+    qreal m_actualDpi;
     qreal m_scaleFactor;
+    qreal m_actualScaleFactor;
     qreal m_textScaleFactor;
 };
 

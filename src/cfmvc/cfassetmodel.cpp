@@ -106,12 +106,12 @@ QString CFAssetModel::image(const QString &fileName, bool withProtocol)
     QRegExp regex(QLatin1String("\\.(png|jpg|gif)$"));
     if (regex.indexIn(imagePath) != -1) {
         CFScreenModel *screenModel = qobject_cast<CFScreenModel *>(CFMvc::instance()->model(CFScreenModel::NAME));
-        int scaleFactor = screenModel->scaleFactor();
+        int scaleFactor = screenModel->actualScaleFactor();
         if (scaleFactor > 1) {
             int i = scaleFactor;
             QString delegate;
-            for (; i >= 2; i++) {
-                delegate = imagePath.replace(regex, QString::fromLatin1("@%1.%2").arg(scaleFactor).arg(regex.cap(1)));
+            for (; i >= 2; i--) {
+                delegate = imagePath.replace(regex, QString::fromLatin1("@%1x.%2").arg(scaleFactor).arg(regex.cap(1)));
                 if (QFile(delegate).exists()) {
                     imagePath = delegate;
                     break;
